@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
+// Lấy URL API từ biến môi trường, nếu không có thì dùng localhost (cho development)
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+
 // Lấy các style từ EmployeeList (chúng ta sẽ dùng chung)
 const styles = {
   table: { width: '100%', borderCollapse: 'collapse', marginTop: '20px' },
@@ -82,7 +85,7 @@ function ContractList() {
     setLoading(true);
     const encodedSearchTerm = encodeURIComponent(currentSearchTerm);
     
-    fetch(`http://localhost:3001/api/contracts?search=${encodedSearchTerm}`)
+    fetch(`${apiUrl}/api/contracts?search=${encodedSearchTerm}`)
       .then(response => response.json())
       .then(data => {
         setContracts(data);
@@ -97,7 +100,7 @@ function ContractList() {
 
   // --- THÊM MỚI: Hàm fetch (READ) Nhân viên ---
   const fetchEmployees = () => {
-    fetch('http://localhost:3001/api/employees?search=') // Lấy tất cả
+    fetch('${apiUrl}/api/employees?search=') // Lấy tất cả
       .then(response => response.json())
       .then(data => {
         setEmployees(data); // Lưu vào state employees
@@ -144,7 +147,7 @@ function ContractList() {
 
     if (editingId) {
       // --- CẬP NHẬT (UPDATE - PUT) ---
-      fetch(`http://localhost:3001/api/contracts/${editingId}`, {
+      fetch(`${apiUrl}/api/contracts/${editingId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dataToSubmit),
@@ -167,7 +170,7 @@ function ContractList() {
 
     } else {
       // --- THÊM MỚI (CREATE - POST) ---
-      fetch('http://localhost:3001/api/contracts', {
+      fetch('${apiUrl}/api/contracts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dataToSubmit),
@@ -194,7 +197,7 @@ function ContractList() {
       return;
     }
     setApiError(null); 
-    fetch(`http://localhost:3001/api/contracts/${contractId}`, {
+    fetch(`${apiUrl}/api/contracts/${contractId}`, {
       method: 'DELETE',
     })
     .then(async response => {

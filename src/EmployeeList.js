@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
+// Lấy URL API từ biến môi trường, nếu không có thì dùng localhost (cho development)
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+
 // CSS styles (Thêm nút Sửa/Cảnh báo)
 const styles = {
   table: { width: '100%', borderCollapse: 'collapse', marginTop: '20px' },
@@ -88,7 +91,7 @@ function EmployeeList() {
     const encodedSearchTerm = encodeURIComponent(currentSearchTerm);
     
     // Gắn searchTerm vào URL
-    fetch(`http://localhost:3001/api/employees?search=${encodedSearchTerm}`)
+    fetch(`${apiUrl}/api/employees?search=${encodedSearchTerm}`)
       .then(response => {
         if (!response.ok) throw new Error('Failed to fetch employees');
         return response.json();
@@ -138,7 +141,7 @@ function EmployeeList() {
     // Quyết định: Sửa (UPDATE) hay Thêm (CREATE)?
     if (editingId) {
       // --- CẬP NHẬT (UPDATE - PUT) ---
-      fetch(`http://localhost:3001/api/employees/${editingId}`, {
+      fetch(`${apiUrl}/api/employees/${editingId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -162,7 +165,7 @@ function EmployeeList() {
 
     } else {
       // --- THÊM MỚI (CREATE - POST) ---
-      fetch('http://localhost:3001/api/employees', {
+      fetch('${apiUrl}/api/employees', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -189,7 +192,7 @@ function EmployeeList() {
       return;
     }
     setApiError(null); 
-    fetch(`http://localhost:3001/api/employees/${employeeId}`, {
+    fetch(`${apiUrl}/api/employees/${employeeId}`, {
       method: 'DELETE',
     })
     .then(async response => {

@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
+// Lấy URL API từ biến môi trường, nếu không có thì dùng localhost (cho development)
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+
 // Sử dụng chung styles
 const styles = {
   table: { width: '100%', borderCollapse: 'collapse', marginTop: '20px' },
@@ -49,7 +52,7 @@ function TrainingList() {
     setLoading(true);
     const encodedSearchTerm = encodeURIComponent(currentSearchTerm);
     // Thay đổi URL API
-    fetch(`http://localhost:3001/api/training?search=${encodedSearchTerm}`)
+    fetch(`${apiUrl}/api/training?search=${encodedSearchTerm}`)
       .then(response => {
            if (!response.ok) throw new Error('Failed to fetch training data');
            return response.json();
@@ -67,7 +70,7 @@ function TrainingList() {
 
   // Hàm fetch (READ) Nhân viên (giữ nguyên)
   const fetchEmployees = () => {
-    fetch('http://localhost:3001/api/employees?search=')
+    fetch('${apiUrl}/api/employees?search=')
       .then(response => {
            if (!response.ok) throw new Error('Failed to fetch employees for dropdown');
            return response.json();
@@ -149,7 +152,7 @@ function TrainingList() {
     if (!window.confirm('Bạn có chắc muốn xóa khóa đào tạo này?')) return;
     setApiError(null);
     // Thay đổi URL API
-    fetch(`http://localhost:3001/api/training/${trainingId}`, { method: 'DELETE' })
+    fetch(`${apiUrl}/api/training/${trainingId}`, { method: 'DELETE' })
     .then(async response => {
       if (response.status === 204) {
         // Cập nhật state đào tạo

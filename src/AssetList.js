@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
+// Lấy URL API từ biến môi trường, nếu không có thì dùng localhost (cho development)
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+
 // Styles dùng chung
 const styles = {
   table: { width: '100%', borderCollapse: 'collapse', marginTop: '20px' },
@@ -52,7 +55,7 @@ function AssetList() {
     setError(null);
     const encodedSearchTerm = encodeURIComponent(currentSearchTerm);
     // Thay đổi URL API
-    fetch(`http://localhost:3001/api/assets?search=${encodedSearchTerm}`)
+    fetch(`${apiUrl}/api/assets?search=${encodedSearchTerm}`)
       .then(response => {
            if (!response.ok) throw new Error('Không thể tải dữ liệu tài sản');
            return response.json();
@@ -70,7 +73,7 @@ function AssetList() {
 
   // Hàm fetch (READ) Nhân viên (giữ nguyên)
   const fetchEmployees = () => {
-    fetch('http://localhost:3001/api/employees?search=')
+    fetch('${apiUrl}/api/employees?search=')
       .then(response => {
            if (!response.ok) throw new Error('Không thể tải danh sách nhân viên');
            return response.json();
@@ -158,7 +161,7 @@ function AssetList() {
     if (!window.confirm('Bạn có chắc muốn xóa tài sản này?')) return;
     setApiError(null);
     // Thay đổi URL API
-    fetch(`http://localhost:3001/api/assets/${assetId}`, { method: 'DELETE' })
+    fetch(`${apiUrl}/api/assets/${assetId}`, { method: 'DELETE' })
     .then(async response => {
       if (response.status === 204) {
         // Cập nhật state tài sản
