@@ -73,7 +73,7 @@ function AttendanceList() {
 
   // Hàm fetch (READ) Nhân viên (giữ nguyên)
   const fetchEmployees = () => {
-    fetch('${apiUrl}/api/employees?search=')
+    fetch(`${apiUrl}/api/employees?search=`)
       .then(response => {
            if (!response.ok) throw new Error('Không thể tải danh sách nhân viên');
            return response.json();
@@ -114,8 +114,8 @@ function AttendanceList() {
     const method = editingId ? 'PUT' : 'POST';
     // Thay đổi URL API
     const url = editingId
-      ? `http://localhost:3001/api/attendance/${editingId}`
-      : 'http://localhost:3001/api/attendance';
+      ? `${apiUrl}/api/attendance/${editingId}`
+      : `${apiUrl}/api/attendance`;;
 
     fetch(url, {
       method: method,

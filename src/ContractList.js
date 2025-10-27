@@ -100,7 +100,7 @@ function ContractList() {
 
   // --- THÊM MỚI: Hàm fetch (READ) Nhân viên ---
   const fetchEmployees = () => {
-    fetch('${apiUrl}/api/employees?search=') // Lấy tất cả
+    fetch(`${apiUrl}/api/employees?search=`) // Lấy tất cả
       .then(response => response.json())
       .then(data => {
         setEmployees(data); // Lưu vào state employees
@@ -170,7 +170,7 @@ function ContractList() {
 
     } else {
       // --- THÊM MỚI (CREATE - POST) ---
-      fetch('${apiUrl}/api/contracts', {
+      fetch(`${apiUrl}/api/contracts`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dataToSubmit),

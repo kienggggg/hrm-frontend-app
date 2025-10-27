@@ -73,7 +73,7 @@ function AssetList() {
 
   // Hàm fetch (READ) Nhân viên (giữ nguyên)
   const fetchEmployees = () => {
-    fetch('${apiUrl}/api/employees?search=')
+    fetch(`${apiUrl}/api/employees?search=`)
       .then(response => {
            if (!response.ok) throw new Error('Không thể tải danh sách nhân viên');
            return response.json();
@@ -121,8 +121,8 @@ function AssetList() {
     const method = editingId ? 'PUT' : 'POST';
     // Thay đổi URL API
     const url = editingId
-      ? `http://localhost:3001/api/assets/${editingId}`
-      : 'http://localhost:3001/api/assets';
+      ? `${apiUrl}/api/assets/${editingId}`
+      : `${apiUrl}/api/assets`;
 
     fetch(url, {
       method: method,

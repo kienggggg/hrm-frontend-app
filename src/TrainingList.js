@@ -70,7 +70,7 @@ function TrainingList() {
 
   // Hàm fetch (READ) Nhân viên (giữ nguyên)
   const fetchEmployees = () => {
-    fetch('${apiUrl}/api/employees?search=')
+    fetch(`${apiUrl}/api/employees?search=`)
       .then(response => {
            if (!response.ok) throw new Error('Failed to fetch employees for dropdown');
            return response.json();
@@ -113,8 +113,8 @@ function TrainingList() {
     const method = editingId ? 'PUT' : 'POST';
     // Thay đổi URL API
     const url = editingId
-      ? `http://localhost:3001/api/training/${editingId}`
-      : 'http://localhost:3001/api/training';
+      ? `${apiUrl}/api/training/${editingId}`
+      : `${apiUrl}/api/training`;
 
     fetch(url, {
       method: method,
@@ -193,7 +193,6 @@ function TrainingList() {
 
   // --- GIAO DIỆN (RENDER) ---
   const renderLoading = () => <p>Đang tải dữ liệu...</p>;
-  const renderError = () => <p style={{ color: 'red' }}>Lỗi: {error || apiError}</p>;
 
   return (
     <div>
